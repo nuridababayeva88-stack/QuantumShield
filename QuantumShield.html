@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🛡️</text></svg>">
+    <meta charset="UTF-8">
+    <title>QuantumShield // Secure Vault</title>
+    <!-- Встроенная иконка для вкладки в формате Base64 -->
+    <link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH5wgRExU1hB0u8AAAAB1pVFh0Q29tbWVudABDcmVhdGVkIHdpdG
+RoIEdJTVBkQqpcAAAAIElEQVQ4y2NgGAWDEv4/ZJv8n9v/v35kAwMjYwMDAwC29w8V3yP1uQAAAABJRU5ErkJggg==">
+    <style>
+        body {
+            background-color: #030712;
+            color: #38bdf8;
+            font-family: 'Courier New', Courier, monospace;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 950px;
+            margin: 0 auto;
+            background: #0b0f19;
+            border: 2px solid #38bdf8;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 0 40px rgba(56, 189, 248, 0.2);
+        }
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #1e293b;
+        }
+        .logo-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #38bdf8;
+            text-shadow: 0 0 10px rgba(56, 189, 248, 0.5);
+            margin: 0;
+        }
+        .logo-slogan {
+            font-size: 11px;
+            color: #64748b;
+            margin-top: 4px;
+        }
+        .status-badge {
+            background: rgba(74, 222, 128, 0.1);
+            border: 1px solid #4ade80;
+            color: #4ade80;
+            font-size: 11px;
+            padding: 4px 10px;
+            border-radius: 6px;
+        }
+        p { color: #94a3b8; font-size: 13px; margin-bottom: 20px; }
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        .pane h3 {
+            font-size: 14px;
+            color: #e2e8f0;
+            margin-top: 0;
+            margin-bottom: 8px;
+        }
+        textarea, input[type="password"] {
+            width: 100%;
+            background: #030712;
+            color: #38bdf8;
+            border: 1px solid #1e293b;
+            border-radius: 8px;
+            padding: 12px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 13px;
+            box-sizing: border-box;
+        }
+        textarea { height: 150px; resize: vertical; }
+        input[type="password"] { margin-bottom: 15px; }
+        textarea:focus, input:focus { outline: none; border-color: #38bdf8; box-shadow: 0 0 10px rgba(56, 189, 248, 0.3); }
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        button {
+            background-color: #38bdf8;
+            color: #030712;
+            border: none;
+            padding: 12px 22px;
+            font-size: 13px;
+            font-weight: bold;
+            border-radius: 6px;
+            cursor: pointer;
+            font-family: 'Courier New', Courier, monospace;
+            transition: all 0.2s;
+        }
+        button:hover { background-color: #0ea5e9; box-shadow: 0 0 15px rgba(14, 165, 233, 0.5); transform: translateY(-1px); }
+        .btn-alt { background-color: #1e293b; color: #e2e8f0; border: 1px solid #334155; }
+        .btn-alt:hover { background-color: #334155; color: #fff; }
+        .metrics-card {
+            margin-top: 25px;
+            background: #030712;
+            border: 1px solid #1e293b;
+            border-radius: 8px;
+            padding: 15px 20px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            text-align: center;
+        }
+        .metric-title { font-size: 11px; color: #64748b; text-transform: uppercase; }
+        .metric-value { font-size: 15px; font-weight: bold; color: #4ade80; margin-top: 4px; }
+        .log-box {
+            margin-top: 20px;
+            background: #030712;
+            border: 1px solid #1e293b;
+            border-radius: 8px;
+            padding: 12px 15px;
+            font-size: 12px;
+            color: #94a3b8;
+            max-height: 90px;
+            overflow-y: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div>
+                <h1 class="logo-title">QuantumShield</h1>
+                <div class="logo-slogan">// SECURE BY DESIGN</div>
+            </div>
+            <span class="status-badge">AES-GCM-256 ACTIVE</span>
+        </header>
+        
+        <p>Real production-grade cryptographic vault using browser-native Web Crypto API (SubtleCrypto) with authenticated encryption.</p>
+
+        <div style="margin-bottom: 15px;">
+            <h3 style="font-size: 13px; color: #e2e8f0; margin-bottom: 5px;">Master Encryption Password / Secret Key:</h3>
+            <input type="password" id="masterKey" value="SuperSecretMasterKey123!">
+        </div>
+
+        <div class="grid">
+            <div class="pane">
+                <h3>Source Data (Plaintext)</h3>
+                <textarea id="inputText" placeholder="Enter sensitive data to encrypt..."></textarea>
+            </div>
+            <div class="pane">
+                <h3>Encrypted Stream (Ciphertext + IV)</h3>
+                <textarea id="outputText" placeholder="Real cryptographic cipher will appear here..." readonly></textarea>
+            </div>
+        </div>
+
+        <div class="btn-group">
+            <button onclick="realEncrypt()">🔒 Real Encrypt (AES-256)</button>
+            <button onclick="realDecrypt()" class="btn-alt">🔓 Real Decrypt</button>
+            <button onclick="loadRealSample()" class="btn-alt">📥 Load Sample</button>
+        </div>
+
+        <div class="metrics-card">
+            <div>
+                <div class="metric-title">Standard</div>
+                <div class="metric-value">NIST AES-GCM 256-bit</div>
+            </div>
+            <div>
+                <div class="metric-title">Engine Status</div>
+                <div class="metric-value" style="color: #38bdf8;">Hardware Accelerated</div>
+            </div>
+            <div>
+                <div class="metric-title">Integrity Check</div>
+                <div class="metric-value" id="secStatus">READY</div>
+            </div>
+        </div>
+
+        <div class="log-box" id="terminalLog">
+            [SYSTEM] Web Crypto API initialized successfully.<br>
+            [READY] Engine awaiting secure payload.
+        </div>
+    </div>
+
+    <script>
+        function logMessage(text, isError = false) {
+            let log = document.getElementById('terminalLog');
+            let time = new Date().toLocaleTimeString();
+            log.innerHTML += `<span style="color: ${isError ? '#f87171' : '#94a3b8'}">[${time}] ${text}</span><br>`;
+            log.scrollTop = log.scrollHeight;
+        }
+
+        function loadRealSample() {
+            document.getElementById('inputText').value = "CONFIDENTIAL_SERVER_CREDENTIALS: user=root, pass=xyz99821, db=production_cluster";
+            logMessage("💡 Real sample payload loaded.");
+        }
+
+        async function getKey(password, salt) {
+            let enc = new TextEncoder();
+            let keyMaterial = await window.crypto.subtle.importKey(
+                "raw",
+                enc.encode(password),
+                { name: "PBKDF2" },
+                false,
+                ["deriveKey"]
+            );
+            return window.crypto.subtle.deriveKey(
+                {
+                    name: "PBKDF2",
+                    salt: salt,
+                    iterations: 100000,
+                    hash: "SHA-256"
+                },
+                keyMaterial,
+                { name: "AES-GCM", length: 256 },
+                false,
+                ["encrypt", "decrypt"]
+            );
+        }
+
+        async function realEncrypt() {
+            let text = document.getElementById('inputText').value;
+            let password = document.getElementById('masterKey').value;
+            if (!text || !password) {
+                logMessage("⚠️ Error: Plaintext or Master Password is empty.", true);
+                return;
+            }
+
+            try {
+                let salt = window.crypto.getRandomValues(new Uint8Array(16));
+                let iv = window.crypto.getRandomValues(new Uint8Array(12));
+                let key = await getKey(password, salt);
+                
+                let encoded = new TextEncoder().encode(text);
+                let ciphertext = await window.crypto.subtle.encrypt(
+                    { name: "AES-GCM", iv: iv },
+                    key,
+                    encoded
+                );
+
+                let combined = new Uint8Array(salt.length + iv.length + ciphertext.byteLength);
+                combined.set(salt, 0);
+                combined.set(iv, salt.length);
+                combined.set(new Uint8Array(ciphertext), salt.length + iv.length);
+
+                let base64String = btoa(String.fromCharCode(...combined));
+                document.getElementById('outputText').value = base64String;
+                document.getElementById('secStatus').innerText = "ENCRYPTED (SECURE)";
+                document.getElementById('secStatus').style.color = "#4ade80";
+                logMessage("🔐 Data successfully encrypted using native AES-GCM 256-bit algorithm.");
+            } catch (e) {
+                logMessage("❌ Encryption failed: " + e.message, true);
+            }
+        }
+
+        async function realDecrypt() {
+            let base64String = document.getElementById('outputText').value;
+            let password = document.getElementById('masterKey').value;
+            if (!base64String || !password) {
+                logMessage("⚠️ Error: Ciphertext stream or Password is empty.", true);
+                return;
+            }
+
+            try {
+                let combined = Uint8Array.from(atob(base64String), c => c.charCodeAt(0));
+                let salt = combined.slice(0, 16);
+                let iv = combined.slice(16, 28);
+                let ciphertext = combined.slice(28);
+
+                let key = await getKey(password, salt);
+                let decrypted = await window.crypto.subtle.decrypt(
+                    { name: "AES-GCM", iv: iv },
+                    key,
+                    ciphertext
+                );
+
+                let originalText = new TextDecoder().decode(decrypted);
+                document.getElementById('inputText').value = originalText;
+                document.getElementById('secStatus').innerText = "DECRYPTED";
+                logMessage("🔓 Ciphertext successfully decrypted with verified cryptographic integrity.");
+            } catch (e) {
+                logMessage("❌ Decryption failed: Invalid password or corrupted cipher payload.", true);
+            }
+        }
+    </script>
+</body>
+</html>
+<link rel="icon" type="image/png" href="favicon.png">
